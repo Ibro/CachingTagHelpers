@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    
+    <div class="col-md-6">
+        <h2>Cache TagHelper</h2>
+        <div class="row">
+            <cache expires-after="@TimeSpan.FromMinutes(10)">
+                This will be cached in server memory. expires-after 10 minutes -- @DateTime.Now.ToString("h:mm:ss tt")
+            </cache>
+        </div>
+        <div class="row">
+            <cache expires-sliding="@TimeSpan.FromSeconds(30)">
+                This will be cached in server memory. expires-sliding (30 seconds) -- @DateTime.Now.ToString("h:mm:ss tt")
+            </cache>
+        </div>
+
+        <div class="row">
+            <cache expires-after="@TimeSpan.FromMinutes(10)" vary-by-query="queryParam1">
+                expires after 10 minutes, <strong>vary-by-query -
+                    <span style="text-decoration: underline">queryParam1</span></strong>
+                <br />
+                @DateTime.Now.ToString("h:mm:ss tt")
+            </cache>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h2>Distributed Cache TagHelper</h2>
+
+        <div class="row">
+            <distributed-cache name="mvc-first" expires-after="@TimeSpan.FromSeconds(40)">
+                distributed-cache first example (expires after 40 seconds) @DateTime.Now.ToString("h:mm:ss tt")
+            </distributed-cache>
+        </div>    
+        <div class="row">
+            <distributed-cache name="mvc-second" expires-after="@TimeSpan.FromSeconds(70)">
+                distributed-cache second example (expires after 70 seconds) @DateTime.Now.ToString("h:mm:ss tt")
+            </distributed-cache>
+        </div>
+    </div>
+
+</div>
